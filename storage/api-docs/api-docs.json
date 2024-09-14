@@ -1,0 +1,223 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Library API",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/books": {
+            "get": {
+                "summary": "Get list of available books",
+                "operationId": "28b9632495ac5f6f66b2e52001d510e6",
+                "responses": {
+                    "200": {
+                        "description": "A list of available books",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Book"
+                                    }
+                                },
+                                "example": [
+                                    {
+                                        "code": "JK-45",
+                                        "title": "Harry Potter",
+                                        "author": "J.K Rowling",
+                                        "stock": 1
+                                    },
+                                    {
+                                        "code": "SHR-1",
+                                        "title": "A Study in Scarlet",
+                                        "author": "Arthur Conan Doyle",
+                                        "stock": 1
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        },
+        "/borrow": {
+            "post": {
+                "summary": "Borrow a book",
+                "operationId": "f3edfc488daf94aaeae351ab14d670c1",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "member_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "book_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Book borrowed successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Book borrowed successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error in borrowing book",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Invalid member or book."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/return": {
+            "post": {
+                "summary": "Return a borrowed book",
+                "operationId": "51809b5ebdf642336a20163e7ba17275",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "member_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    },
+                                    "book_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Book returned successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Book returned successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/members": {
+            "get": {
+                "summary": "Get list of members with borrowed books count",
+                "operationId": "0a7045fbb9a3c713742cb2ed937a0105",
+                "responses": {
+                    "200": {
+                        "description": "A list of members with borrowed books count",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Member"
+                                    }
+                                },
+                                "example": [
+                                    {
+                                        "code": "M001",
+                                        "name": "Angga"
+                                    },
+                                    {
+                                        "code": "M002",
+                                        "name": "Ferry"
+                                    }
+                                ]
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal server error"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Book": {
+                "properties": {
+                    "code": {
+                        "type": "string",
+                        "example": "JK-45"
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "Harry Potter"
+                    },
+                    "author": {
+                        "type": "string",
+                        "example": "J.K Rowling"
+                    },
+                    "stock": {
+                        "type": "integer",
+                        "example": 1
+                    }
+                },
+                "type": "object"
+            },
+            "Member": {
+                "properties": {
+                    "code": {
+                        "type": "string",
+                        "example": "M001"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Angga"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}
